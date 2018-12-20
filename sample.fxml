@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+  <children>
+    <Label fx:id="labelTitleOperatingSystem" layoutX="14.0" layoutY="10.0" text="Operating System:">
+      <font>
+        <Font size="18.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label fx:id="labelOperatingSystem" layoutX="199.0" layoutY="14.0" text="labelSO" />
+    <Label id="labelArchitecture" fx:id="labelTitleArchitecture" font="$x1" layoutX="14.0" layoutY="39.0" text="Architecture:" />
+    <Separator layoutX="181.0" layoutY="0.0" orientation="VERTICAL" prefHeight="399.9998779296875" />
+    <Separator layoutX="0.0" layoutY="35.0" prefWidth="612.0" />
+    <Label fx:id="labelArchitecture" layoutX="197.0" layoutY="39.0" text="labelArchitecture" />
+  </children>
+</AnchorPane>
