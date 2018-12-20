@@ -2,16 +2,12 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.stage.StageStyle;
 import org.hyperic.sigar.*;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,41 +17,25 @@ import java.util.logging.Logger;
 public class Controller implements Initializable {
 
     @FXML
-    Label labelTitleOperatingSystem;
-    @FXML
     Label labelOperatingSystem;
-    @FXML
-    Label labelTitleArchitecture;
     @FXML
     Label labelArchitecture;
     @FXML
-    Label labelTitleCPU;
-    @FXML
     Label labelCPU;
-    @FXML
-    Label labelTitlePhysicalCPU;
     @FXML
     Label labelPhysicalCPU;
     @FXML
-    Label labelTitleCoresPerCPU;
-    @FXML
     Label labelCoresPerCPU;
-    @FXML
-    Label labelTitleCacheSize;
     @FXML
     Label labelCacheSize;
     @FXML
-    Label labelTitlePrimaryIP;
-    @FXML
     Label labelPrimaryIP;
-    @FXML
-    Label labelTitlePrimaryMAC;
     @FXML
     Label labelPrimaryMAC;
     @FXML
-    Label labelTitleHost;
-    @FXML
     Label labelHost;
+    @FXML
+    Label labelNameSO;
 
     @FXML
     MenuBar menu;
@@ -67,6 +47,10 @@ public class Controller implements Initializable {
     MenuItem menuItemSave;
     @FXML
     MenuItem menuItemAbout;
+    @FXML
+    MenuItem menuItemPCIDevices;
+    @FXML
+    Label labelPercentageBattery;
 
     OperatingSystem os;
     Sigar s;
@@ -100,12 +84,53 @@ public class Controller implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, "Your file has been created in: " + data.getAbsolutePath());
+        Alert dialogAlert = new Alert(Alert.AlertType.INFORMATION);
+        dialogAlert.setTitle("Message");
+        dialogAlert.setHeaderText(null);
+        dialogAlert.setContentText("Your file has been created in: " + data.getAbsolutePath());
+        dialogAlert.initStyle(StageStyle.UTILITY);
+        dialogAlert.showAndWait();
     }
 
     @FXML
     public void aboutInformation() {
         JOptionPane.showMessageDialog(null, "Creator: Omar Flores Salazar", "About", 1);
+    }
+
+    @FXML
+    private void getPCIDevices() {
+        if (labelNameSO.getText().equals("Linux")) {
+            Alert dialogAlert = new Alert(Alert.AlertType.INFORMATION);
+            dialogAlert.setTitle("PCI Devices");
+            dialogAlert.setHeaderText(null);
+
+            String[] cmd = {"/bin/bash", "-c", "lspci"};
+            String information = "";
+            String totalInformation = "";
+            Process pb = null;
+            try {
+                pb = Runtime.getRuntime().exec(cmd);
+                BufferedReader input = new BufferedReader(new InputStreamReader(pb.getInputStream()));
+                while (true) {
+                    if ((information = input.readLine()) == null) break;
+                    totalInformation += information + "\n";
+                }
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            dialogAlert.setContentText(totalInformation);
+            dialogAlert.initStyle(StageStyle.UTILITY);
+            dialogAlert.showAndWait();
+        }
+        if (labelNameSO.getText().equals("Windows")) {
+            Alert dialogAlert = new Alert(Alert.AlertType.INFORMATION);
+            dialogAlert.setTitle("PCI Devices");
+            dialogAlert.setHeaderText(null);
+            dialogAlert.setContentText("Not avaible in your system.");
+            dialogAlert.initStyle(StageStyle.UTILITY);
+            dialogAlert.showAndWait();
+        }
     }
 
     @Override
@@ -116,6 +141,7 @@ public class Controller implements Initializable {
         labelOperatingSystem.setText(os.getDescription() + " " + os.getVendorCodeName() + " " + os.getVersion());
         labelArchitecture.setText(os.getMachine());
 
+        labelNameSO.setText(os.getName());
         try {
             CpuInfo[] cpu = s.getCpuInfoList();
             CpuInfo info = cpu[0];
@@ -142,6 +168,25 @@ public class Controller implements Initializable {
             labelPrimaryMAC.setText(net.getHwaddr());
             labelHost.setText(info.getHostName());
         } catch (SigarException e) {
+            e.printStackTrace();
+        }
+        this.getLaptopBatteryInPercentage();
+    }
+
+    private void getLaptopBatteryInPercentage() {
+        String[] cmd = {"/bin/bash", "-c", "upower -i $(upower -e | grep BAT) | grep --color=never -E percentage|xargs|" +
+                "cut -d\" \" -f2|sed s/%//"};
+        String battery = "";
+        Process pb = null;
+        try {
+            pb = Runtime.getRuntime().exec(cmd);
+            BufferedReader input = new BufferedReader(new InputStreamReader(pb.getInputStream()));
+            while (true) {
+                if ((battery = input.readLine()) == null) break;
+                labelPercentageBattery.setText("" + battery + "%");
+            }
+            input.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
