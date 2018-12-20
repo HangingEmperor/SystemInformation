@@ -9,15 +9,51 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
   <children>
-    <Label fx:id="labelTitleOperatingSystem" layoutX="14.0" layoutY="10.0" text="Operating System:">
+    <Label fx:id="labelTitleOperatingSystem" layoutX="14.0" layoutY="35.0" text="Operating System:">
       <font>
         <Font size="18.0" fx:id="x1" />
       </font>
     </Label>
-    <Label fx:id="labelOperatingSystem" layoutX="199.0" layoutY="14.0" text="labelSO" />
-    <Label id="labelArchitecture" fx:id="labelTitleArchitecture" font="$x1" layoutX="14.0" layoutY="39.0" text="Architecture:" />
-    <Separator layoutX="181.0" layoutY="0.0" orientation="VERTICAL" prefHeight="399.9998779296875" />
-    <Separator layoutX="0.0" layoutY="35.0" prefWidth="612.0" />
-    <Label fx:id="labelArchitecture" layoutX="197.0" layoutY="39.0" text="labelArchitecture" />
+    <Label fx:id="labelOperatingSystem" layoutX="197.0" layoutY="39.0" text="labelSO" />
+    <Label id="labelArchitecture" fx:id="labelTitleArchitecture" font="$x1" layoutX="14.0" layoutY="64.0" text="Architecture:" />
+    <Separator layoutX="181.0" layoutY="25.0" orientation="VERTICAL" prefHeight="399.9998779296875" />
+    <Separator layoutX="0.0" layoutY="60.0" prefWidth="612.0" />
+    <Label fx:id="labelArchitecture" layoutX="197.0" layoutY="64.0" text="labelArchitecture" />
+    <Separator layoutX="0.0" layoutY="85.0" prefWidth="598.0" />
+    <Label id="labelCPU" fx:id="labelTitleCPU" font="$x1" layoutX="14.0" layoutY="89.0" text="CPU:" />
+    <Label fx:id="labelCPU" layoutX="197.0" layoutY="89.0" text="labelCPU" />
+    <Separator layoutX="2.0" layoutY="109.0" prefWidth="598.0" />
+    <Label id="labelCacheSize" fx:id="labelTitlePhysicalCPU" font="$x1" layoutX="14.0" layoutY="112.0" text="Physical CPU:" />
+    <Label id="labelCacheSize" fx:id="labelPhysicalCPU" layoutX="197.0" layoutY="113.0" text="labelPyshicalCPU" />
+    <Separator layoutX="1.0" layoutY="134.0" prefWidth="598.0" />
+    <Label id="labelCacheSize" fx:id="labelTitleCoresPerCPU" font="$x1" layoutX="14.0" layoutY="137.0" text="Cores per CPU:" />
+    <Label id="labelCacheSize" fx:id="labelCoresPerCPU" layoutX="197.0" layoutY="139.0" text="labelCoresPerCPU" />
+    <Separator layoutX="0.0" layoutY="158.0" prefWidth="598.0" />
+    <Label id="labelCacheSize" fx:id="labelTitleCacheSize" font="$x1" layoutX="14.0" layoutY="161.0" text="Cache size:" />
+    <Label fx:id="labelCacheSize" layoutX="197.0" layoutY="163.0" text="labelCacheSize" />
+    <Separator layoutX="2.0" layoutY="184.0" prefWidth="598.0" />
+    <Label id="labelHost" fx:id="labelTitlePrimaryIP" font="$x1" layoutX="14.0" layoutY="187.0" text="Primary IP:" />
+    <Label id="labelHost" fx:id="labelPrimaryIP" layoutX="197.0" layoutY="190.0" text="labelPrimaryIP" />
+    <Separator layoutX="3.0" layoutY="210.0" prefWidth="598.0" />
+    <Label id="labelHost" fx:id="labelTitlePrimaryMAC" font="$x1" layoutX="14.0" layoutY="214.0" text="Primary MAC:" />
+    <Label id="labelHost" fx:id="labelPrimaryMAC" layoutX="197.0" layoutY="215.0" text="labelPrimaryMAC" />
+    <Separator layoutX="3.0" layoutY="237.0" prefWidth="598.0" />
+    <Label id="labelHost" fx:id="labelTitleHost" font="$x1" layoutX="14.0" layoutY="241.0" text="Host:" />
+    <Label fx:id="labelHost" layoutX="197.0" layoutY="241.0" text="labelHost" />
+    <MenuBar fx:id="menu" layoutX="1.0" layoutY="1.0" prefWidth="598.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File" fx:id="menuFile">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#saveInformation" text="Save information" fx:id="menuItemSave" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help" fx:id="menuHelp">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#aboutInformation" text="About" fx:id="menuItemAbout" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
   </children>
 </AnchorPane>
+
